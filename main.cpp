@@ -1,17 +1,19 @@
-#include <SDL_image.h>
-#include <SDL.h>
-#include <iostream>
-using namespace std;
+#include "global.h"
+#include "Mouse.h"
+
+SDL_Renderer* renderer = nullptr;
 
 int main(int argc, char* argv[]) {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_Window* window = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 400, SDL_WINDOW_SHOWN);
+	initSDL();
+	SDL_Window* window = SDL_CreateWindow("title", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 850, 600, SDL_WINDOW_SHOWN);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+
 	SDL_Texture* texture = IMG_LoadTexture(renderer, "background.png");
 	if (!texture) {
 		cout << SDL_GetError() << endl;
 	}
 
+	Mouse mouse;
 	bool running = true;
 	double delta = .0001;
 	double time = SDL_GetTicks();
@@ -34,16 +36,21 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
+		mouse.update();
 		SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255);
 		SDL_RenderClear(renderer);
 		SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
 		SDL_RenderFillRect(renderer, &position);
 		SDL_SetRenderDrawColor(renderer, 0, 0, 200, 255);
 		SDL_RenderDrawRect(renderer, &position);
-		SDL_RenderCopy(renderer, texture, NULL, NULL); //change into &area and &position later
+		SDL_RenderCopy(renderer, texture, NULL, &area); //change into &area and &position later
+		mouse.draw();
 		SDL_RenderPresent(renderer);
 	}
 
-	SDL_Quit();
+	SDL_DestroyTexture(texture);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	cleanupSDL();
 	return 0;
 }
