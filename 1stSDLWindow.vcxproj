@@ -131,8 +131,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Common.cpp" />
+    <ClCompile Include="global.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
