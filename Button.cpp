@@ -1,32 +1,34 @@
 #include "Button.h"
 
-Button::Button(const char* texturePath, SDL_Renderer* renderer) {
-    texture = IMG_LoadTexture(renderer, texturePath);
-    if (!texture) {
-        std::cout << "Failed to load texture: " << IMG_GetError() << std::endl;
-        texture = nullptr; 
+Button::Button(const char* normalTexturePath, const char* hoveredTexturePath, const char* clickedTexturePath, SDL_Renderer* renderer) {
+    textureNormal = IMG_LoadTexture(renderer, normalTexturePath);
+    textureHovered = IMG_LoadTexture(renderer, hoveredTexturePath);
+    textureClicked = IMG_LoadTexture(renderer, clickedTexturePath);
+    if (!textureNormal || textureHovered || textureClicked) {
+        cout << "Failed to load texture: " << IMG_GetError() << endl;
     }
-
-    rect.x = 100; 
-    rect.y = 100; 
-    rect.w = 700; 
-    rect.h = 300; 
+    rect = { 100, 110, 700, 400 };
 }
 
 Button::~Button() {
-    if (texture) {
-        SDL_DestroyTexture(texture); 
+    SDL_DestroyTexture(textureNormal);
+    SDL_DestroyTexture(textureHovered);
+    SDL_DestroyTexture(textureClicked);
+}
+
+void Button::update() {
+    int mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    isSelected = (mouseX > rect.x && mouseX < rect.x + rect.w &&
+        mouseY > rect.y && mouseY < rect.y + rect.h);
+}
+
+void Button::draw(SDL_Renderer* renderer) {
+    SDL_Texture* textureToDraw = textureNormal;
+
+    if (isSelected) {
+        textureToDraw = textureHovered;
     }
-}
 
-void Button::render(SDL_Renderer* renderer) {
-    if (texture) {
-        SDL_RenderCopy(renderer, texture, NULL, &rect);
-    }
+    SDL_RenderCopy(renderer, textureToDraw, NULL, &rect);
 }
-
-bool Button::isClicked(int mouseX, int mouseY) {
-    return mouseX >= rect.x && mouseX <= rect.x + rect.w &&
-        mouseY >= rect.y && mouseY <= rect.y + rect.h;
-}
-

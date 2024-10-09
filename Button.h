@@ -1,22 +1,16 @@
 #pragma once
-#ifndef BUTTON_H
-#define BUTTON_H
-#include "Mouse.h"
-class Button
-{
+#include "global.h"
+
+class Button {
 public:
-	SDL_Texture* texture;
-	SDL_Rect rect;
-	bool isSelected = false;
+    SDL_Texture* textureNormal;
+    SDL_Texture* textureHovered;
+    SDL_Texture* textureClicked;
+    SDL_Rect rect;
+    bool isSelected = false;
 
-	Button(const char* texturePath, SDL_Renderer* renderer);
-	~Button();
-	void render(SDL_Renderer* renderer);
-	bool isClicked(int mouseX, int mouseY);
-
-	void update(Mouse&);
-
-	void draw();
-
+    Button(const char* normalTexturePath, const char* hoveredTexturePath, const char* clickedTexturePath, SDL_Renderer* renderer);
+    ~Button();
+    void update();
+    void draw(SDL_Renderer* renderer);
 };
-#endif BUTTON_H

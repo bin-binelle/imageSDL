@@ -16,6 +16,7 @@ void initSDL() {
     }
 }
 
+
 void cleanupSDL() {
     IMG_Quit();
     SDL_Quit();
