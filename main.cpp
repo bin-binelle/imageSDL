@@ -28,4 +28,5 @@ int main(int argc, char* argv[]) {
 //states: start[play], menu[new game and exit], difficulty[easy and hard btn], welcome[left], instruction[left and right], 
         // funfacts[forward and back], game proper, result [home], 
 
-//to improve: start button (buttons in fun fact), hovered and clicked effect, music hehe, trivia after result, dimensions, home button
+//to improve: start button (buttons in fun fact), hovered and clicked effect, music hehe, trivia after result, 
+// adjust dimensions, home button

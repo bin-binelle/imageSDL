@@ -10,7 +10,7 @@ GameState* GameState::menu = new Menu;
 GameState* GameState::difficulty = new Difficulty;
 GameState* GameState::welcome = new Welcome;
 GameState* GameState::instruction = new Instruction;
-GameState* GameState::funFact = new FunFact;
+GameState* GameState::funFact1 = new FunFact1;
 //GameState* GameState::game = new Game;
 GameState* GameState::trivia = new Trivia;
 GameState* GameState::currentGameState = nullptr;
@@ -45,7 +45,7 @@ Start::Start()
     if (!backgroundTexture) {
         cout << "Menu Constructor: Load Background: " << SDL_GetError() << std::endl;
     }
-    playButton = new Button("play button.png", "play_btn_glow.png", "play button.png", renderer);
+    playButton = new Button("buttons/play button.png", "buttons/play_btn_glow.png", "buttons/play button.png", renderer);
     buttons.push_back(playButton);
 }
 
@@ -112,13 +112,13 @@ Menu::Menu() {
         cout << "Failed to load menu background: " << IMG_GetError() << endl;
     }
 
-    newGameButton = new Button("new game.png", "newgame_glow.png", "new game.png", renderer);
+    newGameButton = new Button("buttons/new game.png", "buttons/newgame_glow.png", "buttons/new game.png", renderer);
     buttons.push_back(newGameButton);
     if (!newGameButton) {
         cout << "Failed to create new game button: " << IMG_GetError() << endl;
     }
 
-    exitButton = new Button("exit.png", "exit_glow.png", "exit.png", renderer);
+    exitButton = new Button("buttons/exit.png", "buttons/exit_glow.png", "buttons/exit.png", renderer);
     buttons.push_back(exitButton);
     if (!exitButton) {
         cout << "Failed to create exit button: " << IMG_GetError() << endl;
@@ -156,6 +156,8 @@ void Menu::update()
                 if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
                     if (newGameButton->isSelected) {
                         currentGameState = difficulty;
+                        currentGameState->enter();
+                        return;
                     }
                     else if (exitButton->isSelected) {
                         shutdown();
@@ -194,13 +196,13 @@ Difficulty::Difficulty()
         cout << "Failed to load menu background: " << IMG_GetError() << endl;
     }
 
-    easyButton = new Button("easy_btn.png", "easy_btnglow.png", "easy_btn.png", renderer);
+    easyButton = new Button("buttons/easy_btn.png", "buttons/easy_btnglow.png", "buttons/easy_btn.png", renderer);
     buttons.push_back(easyButton);
     if (!easyButton) {
         cout << "Failed to create new game button: " << IMG_GetError() << endl;
     }
 
-    hardButton = new Button("hard_btn.png", "hard_btnglow.png", "hard_btn.png", renderer);
+    hardButton = new Button("buttons/hard_btn.png", "buttons/hard_btnglow.png", "buttons/hard_btn.png", renderer);
     buttons.push_back(hardButton);
     if (!hardButton) {
         cout << "Failed to create exit button: " << IMG_GetError() << endl;
@@ -238,9 +240,13 @@ void Difficulty::update()
             if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
                 if (easyButton->isSelected) {
                     currentGameState = welcome;
+                    currentGameState->enter();
+                    return;
                 }
                 else if (hardButton->isSelected) {
                     currentGameState = welcome;
+                    currentGameState->enter();
+                    return;
                 }
             }
         }
@@ -274,7 +280,7 @@ Welcome::Welcome()
         cout << "Failed to load menu background: " << IMG_GetError() << endl;
     }
 
-    rightButton = new Button("arrow_rightGlow.png", "arrow_rightGlow.png", "arrow_rightGlow.png", renderer);
+    rightButton = new Button("buttons/arrow_rightGlow.png", "buttons/arrow_rightGlow.png", "buttons/arrow_rightGlow.png", renderer);
     buttons.push_back(rightButton);
     if (!rightButton) {
         cout << "Failed to create new game button: " << IMG_GetError() << endl;
@@ -310,6 +316,8 @@ void Welcome::update()
             if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
                 if (rightButton->isSelected) {
                     currentGameState = instruction;
+                    currentGameState->enter();
+                    return;
                 }
             }
         }
@@ -340,13 +348,13 @@ Instruction::Instruction()
         cout << "Failed to load menu background: " << IMG_GetError() << endl;
     }
 
-    leftButton = new Button("arrow_leftGlow.png", "arrow_leftGlow.png", "arrow_leftGlow.png", renderer);
+    leftButton = new Button("buttons/arrow_leftGlow.png", "buttons/arrow_leftGlow.png", "buttons/arrow_leftGlow.png", renderer);
     buttons.push_back(leftButton);
     if (!leftButton) {
         cout << "Failed to create new game button: " << IMG_GetError() << endl;
     }
 
-    rightButton = new Button("arrow_rightGlow.png", "arrow_rightGlow.png", "arrow_rightGlow.png", renderer);
+    rightButton = new Button("buttons/arrow_rightGlow.png", "buttons/arrow_rightGlow.png", "buttons/arrow_rightGlow.png", renderer);
     buttons.push_back(rightButton);
     if (!rightButton) {
         cout << "Failed to create new game button: " << IMG_GetError() << endl;
@@ -384,12 +392,16 @@ void Instruction::update()
             if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
                 if (leftButton->isSelected) {
                     currentGameState = welcome;
+                    currentGameState->enter();
+                    return;
                 }
             }
 
             if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
                 if (rightButton->isSelected) {
-                    currentGameState = funFact;
+                    currentGameState = funFact1;
+                    currentGameState->enter();
+                    return;
                 }
             }
         }
@@ -415,42 +427,49 @@ void Instruction::exit()
 
 
 
-FunFact::FunFact()
+FunFact1::FunFact1()
 {
     backgroundTexture = IMG_LoadTexture(renderer, "welcome bg.png");
     if (!backgroundTexture) {
         cout << "Failed to load menu background: " << IMG_GetError() << endl;
     }
 
-    backButton = new Button("arrow_back.png", "arrow_back.png", "arrow_back.png", renderer);
+    backButton = new Button("buttons/arrow_back.png", "buttons/arrow_back.png", "buttons/arrow_back.png", renderer);
     buttons.push_back(backButton);
     if (!backButton) {
         cout << "Failed to create new game button: " << IMG_GetError() << endl;
     }
 
-    forwardButton = new Button("arrow_forward.png", "arrow_forward.png", "arrow_forward.png", renderer);
+    forwardButton = new Button("buttons/arrow_forward.png", "buttons/arrow_forward.png", "buttons/arrow_forward.png", renderer);
     buttons.push_back(forwardButton);
     if (!forwardButton) {
         cout << "Failed to create new game button: " << IMG_GetError() << endl;
     }
 
+    startButton = new Button("buttons/start_level.png", "buttons/start_glow.png", "buttons/start_level.png", renderer);
+    buttons.push_back(startButton);
+    if (!startButton) {
+        cout << "Failed to create new game button: " << IMG_GetError() << endl;
+    }
+
     backButton->rect = { 100, 200, 700, 400 };
     forwardButton->rect = { 100, 200, 700, 400 };
+    startButton->rect = { 100, 200, 700, 400 };
 }
 
-FunFact::~FunFact()
+FunFact1::~FunFact1()
 {
     delete backButton;
     delete forwardButton;
     SDL_DestroyTexture(backgroundTexture);
 }
 
-void FunFact::enter()
+void FunFact1::enter()
 {
     cout << "Entered fun fact state" << endl;
 }
 
-void FunFact::update()
+void FunFact1::update()
 {
     bool running = true;
     while (running) {
@@ -466,12 +485,24 @@ void FunFact::update()
             if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
                 if (backButton->isSelected) {
                     currentGameState = instruction; //to change: should be to other fun fact window
+                    currentGameState->enter();
+                    return;
                 }
             }
 
             if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
                 if (forwardButton->isSelected) {
                     currentGameState = trivia; //should have start button, replace to game once connected
+                    currentGameState->enter();
+                    return;
+                }
+            }
+
+            if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
+                if (startButton->isSelected) {
+                    currentGameState = trivia; //should have start button, replace to game once connected
+                    currentGameState->enter();
+                    return;
                 }
             }
         }
@@ -492,7 +523,7 @@ void FunFact::update()
 
 }
 
-void FunFact::exit()
+void FunFact1::exit()
 {
 }
 
@@ -509,7 +540,7 @@ Trivia::Trivia()
         cout << "Failed to load menu background: " << IMG_GetError() << endl;
     }
 
-    homeButton = new Button("arrow_forward.png", "arrow_forward.png", "arrow_forward.png", renderer);//make button
+    homeButton = new Button("button/arrow_forward.png", "button/arrow_forward.png", "button/arrow_forward.png", renderer);//make button
     buttons.push_back(homeButton);
     if (!homeButton) {
         cout << "Failed to create new game button: " << IMG_GetError() << endl;
@@ -545,7 +576,8 @@ void Trivia::update()
             
             if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
                 if (homeButton->isSelected) {
-                    currentGameState = start; //should have start button
+                    currentGameState = start;
+                    currentGameState->enter();
                 }
             }
         }

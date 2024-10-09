@@ -20,12 +20,27 @@ public:
 	static Mouse* mouse;
 
 	static GameState* start;
+	//static GameState* signup;
 	static GameState* menu;
+	//static GameState* leaderboard;
+	//static GameState* leaderboardEasy;
+	//static GameState* leaderboardNormal;
+	//static GameState* leaderboardHard;
 	static GameState* difficulty;
+	//static GameState* level;
 	static GameState* welcome;
 	static GameState* instruction;
-	static GameState* funFact;
-	//static GameState* game;
+	static GameState* funFact1;
+	//static GameState* funFact2;
+	//static GameState* funFact3;
+	//static GameState* funFact4;
+	//static GameState* funFact5;
+	//static GameState* funFact6;
+	//static GameState* funFact7;
+	//static GameState* funFact8;
+	//static GameState* gameEasy;
+	//static GameState* gameNormal;
+	//static GameState* gameHard;
 	static GameState* trivia;
 
 	static GameState* currentGameState;
@@ -56,6 +71,7 @@ public:
 
 private:
 	Button* newGameButton;
+	Button* newLeaderBoard;
 	Button* exitButton;
 };
 
@@ -97,10 +113,10 @@ private:
 	Button* rightButton;
 };
 
-class FunFact : public GameState {
+class FunFact1 : public GameState {
 public:
-	FunFact();
-	virtual ~FunFact();
+	FunFact1();
+	virtual ~FunFact1();
 	virtual void enter();
 	virtual void update();
 	virtual void exit();
@@ -108,6 +124,7 @@ public:
 private:
 	Button* forwardButton;
 	Button* backButton;
+	Button* startButton;
 };
 
 /*class Game : public GameState {
