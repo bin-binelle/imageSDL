@@ -17,6 +17,9 @@ public:
 	static SDL_Window* window;
 	static SDL_Renderer* renderer;
 	SDL_Texture* backgroundTexture;
+	SDL_Texture* titleTexture;
+	SDL_Texture* welcomeTexture;
+	SDL_Texture* instructionTexture;
 	static Mouse* mouse;
 
 	static GameState* start;
@@ -30,17 +33,8 @@ public:
 	//static GameState* level;
 	static GameState* welcome;
 	static GameState* instruction;
-	static GameState* funFact1;
-	//static GameState* funFact2;
-	//static GameState* funFact3;
-	//static GameState* funFact4;
-	//static GameState* funFact5;
-	//static GameState* funFact6;
-	//static GameState* funFact7;
-	//static GameState* funFact8;
-	//static GameState* gameEasy;
-	//static GameState* gameNormal;
-	//static GameState* gameHard;
+	static GameState* funFact;
+	static GameState* memorygame;
 	static GameState* trivia;
 
 	static GameState* currentGameState;
@@ -111,12 +105,13 @@ public:
 private:
 	Button* leftButton;
 	Button* rightButton;
+	Button* startButton;
 };
 
-class FunFact1 : public GameState {
+class FunFact : public GameState {
 public:
-	FunFact1();
-	virtual ~FunFact1();
+	FunFact();
+	virtual ~FunFact();
 	virtual void enter();
 	virtual void update();
 	virtual void exit();
@@ -127,17 +122,30 @@ private:
 	Button* startButton;
 };
 
-/*class Game : public GameState {
+class MemoryGame : public GameState {
 public:
-	Game();
-	virtual ~Game();
-	virtual void enter();
-	virtual void update();
-	virtual void exit();
+
+	bool isPointInRect(int x, int y, const SDL_Rect& rect);
+	MemoryGame();
+	~MemoryGame();
+
+	void enter() override;
+	void update() override;
+	void exit() override;
 
 private:
-	//tentative
-};*/
+	SDL_Texture* backgroundTexture;
+	std::vector<SDL_Texture*> cardTextures;
+	std::vector<SDL_Rect> cardPositions;
+
+	int matchedPairs;
+	int currentSelections[2];
+	bool cardFlipped[16];
+
+	void loadCardTextures();
+	void drawCards();
+	void checkForMatch();
+};
 
 class Trivia : public GameState {
 public:

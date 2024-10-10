@@ -30,3 +30,6 @@ int main(int argc, char* argv[]) {
 
 //to improve: start button (buttons in fun fact), hovered and clicked effect, music hehe, trivia after result, 
 // adjust dimensions, home button
+
+//proceeding to funfact from instruction
+//make hover more precise
